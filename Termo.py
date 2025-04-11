@@ -38,6 +38,7 @@ def RetornaDados():
     NumeroSequencial = incrementar_contador()
     Linha = 1
     Coluna = 0
+    global doc
 
     data_atual = date.today()
     data_em_texto = "0{}/0{}/{}".format(data_atual.day, data_atual.month, data_atual.year)
@@ -137,7 +138,6 @@ def RetornaDados():
 
 def SalvarTermo():
     RetornaDados()
-    doc = Document("Termo.docx")
     caminho_arquivo = "equipamentos.xlsx"
     NumeroSequencial = incrementar_contador()
 
