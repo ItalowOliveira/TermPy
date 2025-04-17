@@ -2,7 +2,6 @@ import pandas as pd
 from docx import Document
 from datetime import date
 import tkinter as tk
-from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
@@ -39,6 +38,7 @@ def RetornaDados():
     NumeroSequencial = incrementar_contador()
     Linha = 1
     Coluna = 0
+    global doc
 
     data_atual = date.today()
     data_em_texto = "0{}/0{}/{}".format(data_atual.day, data_atual.month, data_atual.year)
@@ -73,10 +73,7 @@ def RetornaDados():
             numero_serie = linha.iloc[0]['N/S']
             preco = linha.iloc[0]['PREÇO']
             infoComputadores = (nome, modelo, numero_serie, preco)
-            tabela.insert(infoComputadores)
-            novaLabel = tk.Label(root, text=infoComputadores)
-            novaLabel.pack()
-
+            Lbl5.config(text=infoComputadores)
             tabela.cell(Linha, Coluna).text = str(data_em_texto)
             Coluna += 2
             tabela.cell(Linha, Coluna).text = str(nome)
@@ -103,8 +100,7 @@ def RetornaDados():
             numero_serie = linha.iloc[0]['N/S']
             preco = linha.iloc[0]['PREÇO']
             infoEquipamento = (nome, modelo, numero_serie, preco)
-            novaLabel = tk.Label(root, text=infoEquipamento)
-            novaLabel.pack()
+            Lbl5.config(text=infoEquipamento)
             tabela.cell(Linha, Coluna).text = str(nome)
             Coluna += 1
             tabela.cell(Linha, Coluna).text = str(modelo)
@@ -125,9 +121,7 @@ def RetornaDados():
             numero_serie = linha.iloc[0]['N/S']
             preco = linha.iloc[0]['PREÇO']
             infoCelulares = (nome, modelo, numero_serie, preco)
-            tabela.insert(infoCelulares)
-            novaLabel = tk.Label(root, text=infoCelulares)
-            novaLabel.pack()
+            Lbl5.config(text=infoCelulares)
             tabela.cell(Linha, Coluna).text = str(nome)
             Coluna += 1
             tabela.cell(Linha, Coluna).text = str(modelo)
@@ -141,10 +135,9 @@ def RetornaDados():
     else:
             print('Não escolheu')
 
-    return doc
 
 def SalvarTermo():
-    doc = RetornaDados()
+    RetornaDados()
     caminho_arquivo = "equipamentos.xlsx"
     NumeroSequencial = incrementar_contador()
 
@@ -161,7 +154,7 @@ def SalvarTermo():
         text1 = (f"Arquivo salvo em: {caminhoSavearquivo}")
         messagebox.showwarning("Arquivo Salvo", text1)
     else:
-        text1 = ("Operação de salvamento cancelada.")
+        text2 = ("Operação de salvamento cancelada.")
         messagebox.showwarning("Erro salvamento", text1)
 
     doc.save('Termo.Editado.docx')
@@ -183,8 +176,8 @@ def ValidacaoDados():
 
 root = tk.Tk()
 root.title("Gerador de Termo")
-root.resizable()
-root.geometry("400x550") 
+#root.resizable(width=False, height=False)
+root.geometry("400x300") 
 
 validadorNumeros = root.register(somente_numeros)
 validadorLetras = root.register(somente_letras)
@@ -228,24 +221,17 @@ SubmitBtn .pack()
 SubmitBtn = tk.Button(root,text="Gerar Termo", command=SalvarTermo)
 SubmitBtn .pack()
 
-frame = ttk.Frame(root)
-frame.pack(padx=10, pady=10)
+Lbl5 = tk.Label(root, text="Teste")
+Lbl5.pack()
 
-colunas = ('NOME', 'DESCRIÇÃO', 'MODELO', 'N/S', 'PREÇO')
+Lbl6 = tk.Label(root, text="Teste")
+Lbl6.pack()
 
-tabela = ttk.Treeview(frame, columns=colunas, show='headings')
+Lbl7 = tk.Label(root, text="Teste")
+Lbl7.pack()
 
-for coluna in colunas:
-    tabela.heading(coluna, text=coluna)
-    tabela.column(coluna, anchor="center")
-
-scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tabela.yview)
-tabela.configure(yscrollcommand=scrollbar.set)
-scrollbar.pack(side="right", fill="y")
-
-tabela.pack(fill='both', expand=True)
-
-
+Lbl8 = tk.Label(root, text="Teste")
+Lbl8.pack()
 
 
 root.mainloop()
